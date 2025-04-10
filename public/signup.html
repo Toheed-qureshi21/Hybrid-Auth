@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register page</title>
+</head>
+<body>
+    <h1>Signup page</h1>
+    <form id="signupForm">
+        <label>Name:
+            <input type="text" name="name" required/>
+        </label>
+        <label>Email:
+            <input type="email" name="email" required/>
+        </label>
+        <label>Password:
+            <input type="password" name="password" required/>
+        </label>
+        <button type="submit">Register</button>
+
+    </form>
+    <h2>Already have an account? <a href="/api/login">Login</a></h2>
+
+    <script>
+        document.getElementById("signupForm").addEventListener("submit",async(e)=>{
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            const res = await fetch("/api/signup",{
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify(data)
+            });
+            if (res.ok) {
+                    alert("Signup successfull");
+                    window.location.href = "/api/home";
+            }
+            else alert("Signup failed")
+        })
+    </script>
+</body>
+</html>
